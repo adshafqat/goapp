@@ -25,9 +25,8 @@ stages:
       displayName: Build an image
       inputs:
         containerRegistry: 'devregistry'
-        repository: '''$(imageRepo)'''
+        repository: '$(imageRepo)'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: |
           $(tag)
-          latest
