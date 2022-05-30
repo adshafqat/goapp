@@ -9,15 +9,7 @@ resources:
 - repo: self
 
 variables:
-  - task: Docker@2
-  inputs:
-    containerRegistry: 'devregistry'
-    repository: '''$(imageRepo)'''
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-    tags: |
-      $(tag)
-      latest: devimages
+  imageRepo: devimages
   tag: '$(Build.BuildId)'
 
 stages:
@@ -32,7 +24,10 @@ stages:
     - task: Docker@2
       displayName: Build an image
       inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        containerRegistry: 'devregistry'
+        repository: '''$(imageRepo)'''
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
         tags: |
           $(tag)
+          latest
