@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-web-app
+  namespace: webapp
+  labels:
+    app: my-web-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-web-app
+  template:
+    metadata:
+      labels:
+        app: my-web-app
+    spec:
+      containers:
+      - name: my-web-app-container
+        image: docker.io/ashafqat/go-web-service:latest
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always  
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: my-web-app-service
+  namespace: webapp
+spec:
+  selector:
+    app: my-web-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
