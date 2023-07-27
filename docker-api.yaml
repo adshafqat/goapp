@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-api
+  namespace: docker-api-ns
+  labels:
+    app: docker-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker-api
+  template:
+    metadata:
+      labels:
+        app: docker-api
+    spec:
+      containers:
+      - name: docker-api-container
+        image: ghcr.io/arimgibson/docker-api:latest
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always  
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: docker-api-service
+  namespace: docker-api-ns
+spec:
+  selector:
+    app: docker-api
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
