@@ -20,6 +20,15 @@ spec:
         image: ghcr.io/arimgibson/docker-api:latest
         ports:
         - containerPort: 8080
+        env:
+          - name: variable1
+            value: fiverr
+          - name: variable2
+            value: info@zaynsolutions.com
+          - name: variable3
+            value: mysql-service
+          - name: variable4
+            value: root
         imagePullPolicy: Always  
 ---
 kind: Service
